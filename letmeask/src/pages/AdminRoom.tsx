@@ -10,6 +10,7 @@ import { Question } from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
 import deleteImg from '../assets/images/delete.svg'
 import { database } from '../services/firebase'
+import { useState } from 'react'
 
 
 type RoomParams = {
@@ -23,6 +24,9 @@ export function AdminRoom(){
     const roomId = params.id || ' '
 
     const {questions, title} = useRoom(roomId);
+
+    const [isHighlighted, setIsHighlighted] = useState(false);
+    const [isAnswered, setIsAnswered] = useState(false);
 
     async function handleEndRoom() {
         await database.ref(`rooms/${roomId}`).update({
@@ -39,8 +43,9 @@ export function AdminRoom(){
     }
 
     async function handleHighlightQuestion(questionId: string){
+        setIsHighlighted(!isHighlighted);
         await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-            isHighlighted: true,
+            isHighlighted,
         });
     }
 
@@ -54,7 +59,7 @@ export function AdminRoom(){
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask"></img>
+                    <img src={logoImg} alt="Letmeask" onClick={()=>{navigate('/')}}/>
                     <div>
                         <RoomCode code={roomId} />
                         <Button isOutlined onClick={handleEndRoom}>Encerrar Sala</Button>

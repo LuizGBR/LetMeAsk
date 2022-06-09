@@ -9,8 +9,9 @@ const firebaseConfig = {
   projectId: "letmeask-3a531",
   storageBucket: "letmeask-3a531.appspot.com",
   messagingSenderId: "585268931247",
-  appId: "1:585268931247:web:10ef33e13f9c1e7f09025a"
+  appId: "1:585268931247:web:bed622467d0660e309025a"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
