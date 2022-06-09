@@ -25,8 +25,6 @@ export function AdminRoom(){
 
     const {questions, title} = useRoom(roomId);
 
-    const [isHighlighted, setIsHighlighted] = useState(false);
-    const [isAnswered, setIsAnswered] = useState(false);
 
     async function handleEndRoom() {
         await database.ref(`rooms/${roomId}`).update({
@@ -43,7 +41,10 @@ export function AdminRoom(){
     }
 
     async function handleHighlightQuestion(questionId: string){
-        setIsHighlighted(!isHighlighted);
+        
+        const question = questions.find(question => question.id === questionId);        
+        const isHighlighted = !question?.isHighlighted;
+
         await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
             isHighlighted,
         });
