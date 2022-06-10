@@ -10,7 +10,9 @@ import { Question } from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
 import deleteImg from '../assets/images/delete.svg'
 import { database } from '../services/firebase'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
+import { off } from 'process'
 
 
 type RoomParams = {
@@ -23,7 +25,16 @@ export function AdminRoom(){
     const params = useParams<RoomParams>();
     const roomId = params.id || ' '
 
-    const {questions, title} = useRoom(roomId);
+    const {questions, title, authorId} = useRoom(roomId);
+    const {user} = useAuth();
+
+    useEffect(()=>{
+        if(authorId && user){
+            if(authorId !== user.id){
+                navigate(`/rooms/${roomId}`);
+            }
+        }
+    },[authorId, user])
 
 
     async function handleEndRoom() {

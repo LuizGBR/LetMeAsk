@@ -1,10 +1,10 @@
 import logoImg from '../assets/images/logo.svg'
 import { Button } from '../components/Button'
 import { RoomCode } from '../components/RoomCode'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import '../styles/room.scss'
 import { useAuth } from '../hooks/useAuth'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { database } from '../services/firebase'
 import { Question } from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
@@ -14,14 +14,23 @@ type RoomParams = {
 }
 
 export function Room(){
-    
+    const navigate = useNavigate();
+
     const params = useParams<RoomParams>();
     const roomId = params.id || ' '
 
     const { user } = useAuth();
-    const {questions, title} = useRoom(roomId);
+    const {questions, title, authorId} = useRoom(roomId);
 
     const [newQuestion, setNewQuestion] = useState('');
+
+    useEffect(()=>{
+        if(authorId && user){
+            if(authorId === user.id){
+                navigate(`/admin/rooms/${roomId}`);
+            }
+        }
+    },[authorId, user])
  
     async function handleSendQuestion(event: FormEvent){
         event.preventDefault();
@@ -65,7 +74,7 @@ export function Room(){
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="Letmeask"></img>
+                    <img src={logoImg} alt="Letmeask" onClick={()=>{navigate('/')}}></img>
                     <RoomCode code={roomId} />
                 </div>
             </header>
