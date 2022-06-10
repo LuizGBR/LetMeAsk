@@ -120,5 +120,28 @@
             margin-top: 32px;
         }
 
+        .empty{
+
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 20vh; 
+
+            > img {
+                align-self: center;
+            }
+            
+            strong{
+                color: #29292e;
+                margin-top: 8px;
+            }
+            
+            p{
+                margin-top: 8px;
+                color: #737380;
+            }
+        }
+
     }
 }
