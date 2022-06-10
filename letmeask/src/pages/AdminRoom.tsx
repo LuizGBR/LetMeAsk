@@ -10,7 +10,7 @@ import { Question } from '../components/Question'
 import { useRoom } from '../hooks/useRoom'
 import deleteImg from '../assets/images/delete.svg'
 import { database } from '../services/firebase'
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { off } from 'process'
 
