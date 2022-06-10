@@ -67,19 +67,39 @@
                 color: #737380;
                 gap: 8px;
 
+                &:hover{
+
+                    svg path{
+                        stroke:#835afd;
+                    }
+                }
+
                 &.liked{
                     color: #835afd;
-    
+                    
                     svg path {
                         stroke: #835afd;
                     }
                 }
             }
 
-            &:hover{
-                filter: brightness(0.7);
+            &.delete-button{
+
+                &:hover{
+                    svg path{
+                        stroke:#e73f5d;
+                    }
+                }
             }
 
+            &.function-button{
+
+                &:hover{
+                    svg path, circle{
+                        stroke:#835afd;
+                    }
+                }
+            }
 
         }
     }
