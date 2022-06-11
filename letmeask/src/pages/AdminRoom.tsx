@@ -12,6 +12,7 @@ import { useRoom } from '../hooks/useRoom'
 import { database } from '../services/firebase'
 import { useEffect, useState} from 'react'
 import { useAuth } from '../hooks/useAuth'
+import { toast } from 'react-toastify'
 
 
 type RoomParams = {
@@ -30,7 +31,6 @@ export function AdminRoom(){
     const [isOpen, setIsOpen] = useState(false);
     const [isEndRoom, setIsEndRoom] = useState(false);
     const [questionIdToBeDeleted, setQuestionIdToBeDeleted] = useState('');
-    
     
     useEffect(()=>{
         if(authorId && user){
@@ -75,7 +75,21 @@ export function AdminRoom(){
     }
 
     async function handleDeleteQuestion(questionId: string){
-        await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+        try{
+            await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+            toast.success('Pergunta apagada!');
+        }catch{
+            toast.error('Erro ao apagar pergunta.', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        
     }
 
     return(

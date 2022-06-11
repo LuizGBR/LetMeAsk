@@ -11,9 +11,7 @@ type ModalProps = {
 }
 
 export function Modal({showModal, setShowModal, endRoom, setEndRoom, action}: ModalProps){
-    
-    const [modalTitle, setModalTitle] = useState('');
-    const [modalDescription, setModalDescription] = useState('');
+
     const [body, setBody] = useState<ReactNode>();
     const [actionDescription, setActionDescription] = useState('');
 
