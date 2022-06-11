@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { FormEvent, useState } from "react";
 import { database} from "../services/firebase";
+import { toast } from "react-toastify";
 
 
 export function NewRoom(){
@@ -22,14 +23,21 @@ export function NewRoom(){
             return;
         }
 
-        const roomRef = database.ref('rooms');
+        try{
+            const roomRef = database.ref('rooms');
 
-        const firebaseRoom = await roomRef.push({
-            title: newRoom,
-            authorId: user?.id,
-        });
-
-        navigate(`/admin/rooms/${firebaseRoom.key}`)
+            const firebaseRoom = await roomRef.push({
+                title: newRoom,
+                authorId: user?.id,
+            });
+    
+            navigate(`/admin/rooms/${firebaseRoom.key}`)
+            toast.success('Sala criada com sucesso!');
+        }catch{
+            toast.error('Erro ao criar sala.');
+        }
+        
+        
     }
 
     return(
